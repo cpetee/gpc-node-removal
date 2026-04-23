@@ -34,7 +34,7 @@ NODE_BLACKLIST=$(printf "${CLUSTER_PREFIX}-%s.us-midwest-1.nxcli.net\n" "${NODE_
 NODE_INT_LIST=$(printf "${CLUSTER_PREFIX}-%s-int\n" "${NODE_ARRAY[@]}")
 
 # 3. Redis Instance Logic (Dynamic Array)
-read -p "Enter Redis Instances (separated by spaces, e.g., inst1 inst2): " REDIS_INPUT
+read -p "Enter Redis Instances (separated by spaces, e.g., inst1 inst2, from 'nkredi info' on node, exclude "-cache-replica" pattern): " REDIS_INPUT
 read -a REDIS_ARRAY <<< "$REDIS_INPUT"
 
 REDIS_STOP_BLOCK=""
@@ -42,9 +42,9 @@ REDIS_STATUS_BLOCK=""
 REDIS_RESET_BLOCK=""
 
 for inst in "${REDIS_ARRAY[@]}"; do
-    REDIS_STOP_BLOCK+=$'systemctl stop redis-multi-'"$inst"$'-replica.service\n'
-    REDIS_STATUS_BLOCK+=$'systemctl status redis-multi-'"$inst"$'-replica.service\n'
-    REDIS_RESET_BLOCK+=$'SENTINEL RESET '"$inst"$'-cache\n'
+    REDIS_STOP_BLOCK+=$'systemctl stop redis-multi-'"$inst"$'-cache-replica.service\n'
+    REDIS_STATUS_BLOCK+=$'systemctl status redis-multi-'"$inst"$'-cache-replica.service\n'
+    REDIS_RESET_BLOCK+=$'SENTINEL RESET '"$inst"$'\n'
 done
 
 # 4. Domain Logic
