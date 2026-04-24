@@ -123,7 +123,7 @@ ansible-playbook <CLUSTER PREFIX>_prod /playbooks/haproxy.yml
 ansible-playbook <CLUSTER PREFIX>_prod /playbooks/varnish.yml
 - Local docroots: Run in tmux or screen 
 ansible-playbook <CLUSTER PREFIX>_prod /playbooks/local-docroot.yml
-- Redis: stop each instances on the web nodes
+- Redis: stop each instances on the web nodes being removed
 <REDIS_STOP_BLOCK>
 <REDIS_STATUS_BLOCK>
 - Reset from the Master instance (<CLUSTER PREFIX>-fs1)
